@@ -52,11 +52,20 @@ def greedy_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    sorted_cows = {k: v for k, v in reversed(sorted(cows.items(), key=lambda item: item[1]))}
+    desc_weight = {k: v for k, v in reversed(sorted(cows.items(), key=lambda x: x[1]))}
+    trips = []
+    while len(desc_weight) > 0:
+        remaining_capa = limit
+        trip = []
+        for cow in desc_weight.copy().keys():
+            if remaining_capa - cows[cow] >= 0 and cow not in (trips, trip):
+                trip.append(cow)
+                remaining_capa -= cows[cow]
+                del desc_weight[cow]
+        trips.append(trip)
+    return trips
 
 
-greedy_cow_transport(load_cows('ps1_cow_data.txt'))
 # Problem 3
 def brute_force_cow_transport(cows,limit=10):
     """
@@ -79,9 +88,24 @@ def brute_force_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
-        
+    best_trip = []
+    for partition in get_partitions(cows):
+        valid_trip = True
+        for trip in partition:
+            weight = 0
+            for cow in trip:
+                weight += cows[cow]
+                if weight > limit:
+                    valid_trip = False
+        if valid_trip:
+            if len(best_trip) == 0:
+                best_trip.append(partition)
+            else:
+                if len(partition) < len(best_trip):
+                    best_trip = partition
+    return best_trip
+
+
 # Problem 4
 def compare_cow_transport_algorithms():
     """
@@ -96,5 +120,14 @@ def compare_cow_transport_algorithms():
     Returns:
     Does not return anything.
     """
-    # TODO: Your code here
-    pass
+    cows = load_cows('ps1_cow_data.txt')
+    print("Time Elapsed:")
+    start = time.perf_counter_ns()
+    greedy_cow_transport(cows)
+    print(f"greedy_cow_transport(): {time.perf_counter_ns() - start:,} nanoseconds")
+    start = time.perf_counter_ns()
+    brute_force_cow_transport(cows)
+    print(f"brute_force_cow_transport(): {time.perf_counter_ns() - start:,} nanoseconds")
+
+
+compare_cow_transport_algorithms()
