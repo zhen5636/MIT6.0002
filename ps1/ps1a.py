@@ -24,8 +24,10 @@ def load_cows(filename):
     Returns:
     a dictionary of cow name (string), weight (int) pairs
     """
-    # TODO: Your code here
-    pass
+    cows = {l.split(',')[0]: int(l.split(',')[1].strip('\n'))
+             for l in open(filename, 'r').readlines()}
+    return cows
+
 
 # Problem 2
 def greedy_cow_transport(cows,limit=10):
@@ -51,8 +53,10 @@ def greedy_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    sorted_cows = {k: v for k, v in reversed(sorted(cows.items(), key=lambda item: item[1]))}
 
+
+greedy_cow_transport(load_cows('ps1_cow_data.txt'))
 # Problem 3
 def brute_force_cow_transport(cows,limit=10):
     """
