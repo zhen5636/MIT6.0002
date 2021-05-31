@@ -1,4 +1,4 @@
-## [MIT6.0002](http://ocw.mit.edu/6-0002F16) - Intro to Computational Thinking and Data Science
+## [MIT6.0002](http://ocw.mit.edu/6-0002F16) - Introduction to Computational Thinking and Data Science
 
 **Beware!** :eyes: This is not only my first attempt at learning Python, but also my first time at programming as well as Git. Thus, be prepared to see horrible code and commit history. 
 ## Some Random Info
