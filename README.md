@@ -1,10 +1,10 @@
-# [MIT6.0002](http://ocw.mit.edu/6-0002F16) - Intro to Computational Thinking and Data Science
+## [MIT6.0002](http://ocw.mit.edu/6-0002F16) - Intro to Computational Thinking and Data Science
 
 **Beware!** :eyes: This is not only my first attempt at learning Python, but also my first time at programming as well as Git. Thus, be prepared to see horrible code and commit history. 
 ## Some Random Info
 * 📅 **Started** on May 23, 2021
 * 🏁 **Finished** on TBD
-* ℹ️ **Python Versions I used**: 3.9.5
+* ℹ️ **Python Versions I used**: [3.9.5](https://www.python.org/downloads/release/python-395/)
 * 🔗 **Link to my repo for the previous course:** [MIT6.0001](https://github.com/lcsm29/MIT6.0001)
 
 ## Sources
