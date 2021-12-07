@@ -1,6 +1,6 @@
 #CLASS REPRESENTATION OF OBJECTS IN MENU
-
-class Food(object):
+#计算 食物最优 卡露里
+class Food(object): #食物类   食物名 、 质量 value 、 热量 calories 
     def __init__(self, n, v , w):
         self.name = n
         self.value = v
@@ -12,22 +12,26 @@ class Food(object):
     def getCost(self):
         return self.calories
 
-    def density(self):
-        return self.getValue()/self.getCost()
+    def density(self):  
+        """ 密度"""
+        return self.getValue()/self.getCost()  
 
     def __str__(self):
         return self.name + ': <' + str(self.value) + ', ' + str(self.calories) + '>'
 
 # FUNCTION RESPONSIBLE FOR BUILDING MENU
-
-def buildMenu(names, values, calories):
+#
+# 产生一个 食物菜单  List
+def buildMenu(names, values, calories):  
+    """ 食物 价格 卡露里"""
+    #食物名称清单 、 价格清单 、卡露里值清单
     """names, values, calories lists of same length.
     name a list of strings
     values and calories lists of numbers
     returns list of Foods"""
     menu = []
     for i in range(len(values)):
-        menu.append(Food(names[i], values[i], calories[i]))
+        menu.append(Food(names[i], values[i], calories[i])) #收集 Foods
 
     return menu
 
@@ -42,11 +46,11 @@ def greedy(items, maxCost, keyFunction):
     result = []
     totalValue, totalCost = 0.0, 0.0
 
-    for i in range(len(itemsCopy)):
+    for i in range(len(itemsCopy)): 
         if (totalCost + itemsCopy[i].getCost()) <= maxCost:
-            result.append(itemsCopy[i])
-            totalCost += itemsCopy[i].getCost()
-            totalValue += itemsCopy[i].getValue()
+            result.append(itemsCopy[i])         # 收集
+            totalCost += itemsCopy[i].getCost()  # 累积 costs 
+            totalValue += itemsCopy[i].getValue() #累积卡露里值清单
 
     return (result, totalValue)
 

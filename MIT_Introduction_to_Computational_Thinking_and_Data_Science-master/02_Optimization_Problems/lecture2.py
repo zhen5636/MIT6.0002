@@ -1,5 +1,5 @@
 
-
+#计算 食物最优 卡露里
 class Food(object):
     def __init__(self, n, v, w):
         self.name = n
@@ -14,7 +14,7 @@ class Food(object):
     def __str__(self):
         return self.name + ': <' + str(self.value)\
                  + ', ' + str(self.calories) + '>'
-
+# 产生一个 食物菜单  List
 def buildMenu(names, values, calories):
     menu = []
     for i in range(len(values)):
@@ -22,18 +22,26 @@ def buildMenu(names, values, calories):
                           calories[i]))
     return menu
 
+# bettes  最好 什么最好 背包问题
+#贪婪 算法
+# 效率 如何 nlog n n=len() 10K*log 10k
 def greedy(items, maxCost, keyFunction):
     """Assumes items a list, maxCost >= 0,
          keyFunction maps elements of Items to numbers"""
+         # KEY Function 映射到 数字 为每个元素 
+          # 找出最优 Bettes
+          #找 最优与最差 与 元素有关排序，
     itemsCopy = sorted(items, key = keyFunction,
-                       reverse = True)
+                       reverse = True) #排序 条件 ，最优
     result = []
     totalValue, totalCost = 0.0, 0.0
-    for i in range(len(itemsCopy)):
+    # 计算 累积
+
+    for i in range(len(itemsCopy)):  # 遍历 序列
         if (totalCost+itemsCopy[i].getCost()) <= maxCost:
-            result.append(itemsCopy[i])
-            totalCost += itemsCopy[i].getCost()
-            totalValue += itemsCopy[i].getValue()
+            result.append(itemsCopy[i])         # 收集
+            totalCost += itemsCopy[i].getCost()  #+= 累积卡露里值清单
+            totalValue += itemsCopy[i].getValue() # 累积 costs 
     return (result, totalValue)
 
 def testGreedy(items, constraint, keyFunction):
@@ -45,7 +53,8 @@ def testGreedy(items, constraint, keyFunction):
 def testGreedys(foods, maxUnits):
     print('Use greedy by value to allocate', maxUnits,
           'calories')
-    testGreedy(foods, maxUnits, Food.getValue)
+
+    testGreedy(foods, maxUnits, Food.getValue) #确定优先 排序条件 Food.GtValue
     print('\nUse greedy by cost to allocate', maxUnits,
           'calories')
     testGreedy(foods, maxUnits,
@@ -54,24 +63,36 @@ def testGreedys(foods, maxUnits):
           'calories')
     testGreedy(foods, maxUnits, Food.density)
 
+# 原理：二叉树 分枝   Take and  dnot take 
+# 目的：从items序列中，找出最优组合 ，最大价值（背包问题，空间装载，最大价值）
+# 二叉枝算法： 降低时间复杂度 优化代码 
+ # 返回： 最大价值序列， 价值
+  #参数： toconsider 是Item序列  avail累加value
 def maxVal(toConsider, avail):
     """Assumes toConsider a list of items, avail a weight
        Returns a tuple of the total value of a solution to the
-         0/1 knapsack problem and the items of that solution"""
+         0/1 knapsack problem（背包问题） and the items of that solution"""
+    """ avail 重量上限 """   
+
     if toConsider == [] or avail == 0:
         result = (0, ())
     elif toConsider[0].getCost() > avail:
         #Explore right branch only
+        # 递归  向右分枝
         result = maxVal(toConsider[1:], avail)
     else:
         nextItem = toConsider[0]
         #Explore left branch
+        # 左分枝 不包含 上一个结点
         withVal, withToTake = maxVal(toConsider[1:],
                                      avail - nextItem.getCost())
         withVal += nextItem.getValue()
         #Explore right branch
+         # 右分枝 包含 上一个结点
         withoutVal, withoutToTake = maxVal(toConsider[1:], avail)
+       
         #Choose better branch
+        # 选择 最优分枝
         if withVal > withoutVal:
             result = (withVal, withToTake + (nextItem,))
         else:
@@ -87,6 +108,8 @@ def testMaxVal(foods, maxUnits, printItems = True):
         for item in taken:
             print('   ', item)
 
+
+# 测试 背包 优化算法
 names = ['wine', 'beer', 'pizza', 'burger', 'fries',
          'cola', 'apple', 'donut', 'cake']
 values = [89,90,95,100,90,79,50,10]
@@ -98,7 +121,6 @@ print('')
 testMaxVal(foods, 750)
 
 import random
-
 def buildLargeMenu(numItems, maxVal, maxCost):
     items = []
     for i in range(numItems):
