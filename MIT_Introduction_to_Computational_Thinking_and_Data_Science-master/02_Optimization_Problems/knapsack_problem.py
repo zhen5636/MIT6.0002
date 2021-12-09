@@ -1,5 +1,5 @@
 # 原理：二叉树 分枝   Take and  dnot take 
-# 目的：从items序列中，找出最优组合,最大价值（背包问题，有限空间，最大价值）
+# 目的：从items序列中，找出最优组合,最大价值（0/1背包问题，人的有限负重，最大价值）
 #  算法：二叉枝 Take/dont take , 降低时间复杂度 优化代码 
     # 返回：最大价值序列， 价值
     #参数： toconsider 是Item序列  avail累加value
@@ -12,8 +12,8 @@ def maxVal(toConsider, avail):
     if toConsider == [] or avail == 0:
         result = (0, ())
     elif toConsider[0].getCost() > avail:
-        #Explore right branch only
-        # 递归  向右分枝
+        #Explore right branch only 
+        # 递归   向右分枝：for consider[0] 太大不能选入
         result = maxVal(toConsider[1:], avail)
     else:
         nextItem = toConsider[0]

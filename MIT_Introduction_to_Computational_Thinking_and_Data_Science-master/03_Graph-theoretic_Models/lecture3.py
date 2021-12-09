@@ -6,6 +6,8 @@ Created on Tue Jul 12 15:04:56 2016
 """
 
 
+#图论 
+# Node 图中的结点 
 class Node(object):
     def __init__(self, name):
         """Assumes name is a string"""
@@ -18,9 +20,11 @@ class Node(object):
         return self.name
 
 
+# edge 图 的边 
 class Edge(object):
     def __init__(self, src, dest):
         """Assumes src and dest are nodes"""
+        #内部变量 私有变量
         self.src = src
         self.dest = dest
 
@@ -34,19 +38,25 @@ class Edge(object):
         return self.src.getName() + '->' + self.dest.getName()
 
 
+#有向图
 class Digraph(object):
     """edges is a dict mapping each node to a list of
     its children"""
-
+    
+    # d edges 是一个词典类型 
+    #   key 是node 类型
     def __init__(self):
         self.edges = {}
 
+    # 向 edge 词典  向edges 添加  Node as Key
+    # edge 添加 node 条目
     def addNode(self, node):
         if node in self.edges:
             raise ValueError('Duplicate node')
         else:
             self.edges[node] = []
 
+   #向Dic node 添加 edges
     def addEdge(self, edge):
         src = edge.getSource()
         dest = edge.getDestination()
